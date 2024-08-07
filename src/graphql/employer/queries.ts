@@ -15,28 +15,41 @@ export const GET_JOBS_BY_EMPLOYER = gql`
       salary_per_hour
       skills
       created_at
+      applications(where: { employer_id: { _eq: $employer_id } }) {
+        freelancer_id
+      }
     }
+
     jobs_aggregate(where: { employer_id: { _eq: $employer_id } }) {
       aggregate {
         count
+      }
+    }
+    applications_aggregate(where: { job_id: { _eq: 10 } }) {
+      aggregate {
+        count(distinct: false)
       }
     }
   }
 `;
 
 export const GET_APPLICATIONS_BY_JOB_ID = gql`
-  query GetApplicationsByJobId($job_id: Int!) {
-    applications(where: { job_id: { _eq: $job_id } }) {
-      freelancer_id
+  query GetApplicationsByJobId($job_id: Int!, $limit: Int!, $offset: Int!) {
+    applications(
+      where: { job_id: { _eq: $job_id } }
+      limit: $limit
+      offset: $offset
+      order_by: { applied_at: desc }
+    ) {
       job_id
       id
       applied_at
-      applicant {
+      freelancer_id
+      freelancer {
         id
         name
         email
-        skills
-        github_profile
+        contact_no
       }
     }
   }

@@ -1,18 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const APPLY_FOR_JOB = gql`
-  mutation ApplyForJob(
-    $freelancer_id: Int!
-    $job_id: Int!
-    $employer_id: Int!
-  ) {
-    insert_applications_one(
-      object: {
-        freelancer_id: $freelancer_id
-        job_id: $job_id
-        employer_id: $employer_id
-      }
-    ) {
+  mutation ApplyForJob($object: applications_insert_input!) {
+    insert_applications_one(object: $object) {
       id
       freelancer_id
       job_id
@@ -102,7 +92,7 @@ export const APPLY_FOR_JOB = gql`
 //       job_id
 //       id
 //       applied_at
-//       applicant {
+//       freelancer {
 //         id
 //         name
 //         email

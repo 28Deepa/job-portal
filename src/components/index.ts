@@ -7,3 +7,4 @@ export { default as CustomPagination } from "./CustomPagination";
 export { default as CreateJobForm } from "./CreateJobForm";
 export { default as EmployerJobCard } from "./EmployerJobCard";
 export { default as ApplicantJobCard } from "./ApplicantJobCard";
+export { default as ApplicationCard } from "./ApplicationCard";

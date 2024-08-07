@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import { Box, Typography, Container } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@apollo/client";
-import { CustomLoader, EmployerJobCard } from "../../../components";
+import {
+  CustomLoader,
+  CustomPagination,
+  EmployerJobCard,
+} from "../../../components";
 import { IJob } from "../../../types";
 import { GET_JOBS_BY_EMPLOYER } from "../../../graphql/employer/queries";
 import { useSelector } from "react-redux";
+import { PAGINATION_LIMIT } from "../../../constants";
 
 const EmployerJobList = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const limit = 5;
+  const limit = PAGINATION_LIMIT;
   const offset = (page - 1) * limit;
 
   const { loggedInUserData } = useSelector((state: any) => state.AuthReducer);
@@ -65,6 +70,13 @@ const EmployerJobList = () => {
               <Typography>No jobs posted yet.</Typography>
             )}
           </Box>
+
+          <CustomPagination
+            totalCount={totalCount}
+            limit={limit}
+            page={page}
+            handlePageChange={handlePageChange}
+          />
         </Box>
       </Box>
     </Container>

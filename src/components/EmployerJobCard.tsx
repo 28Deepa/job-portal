@@ -1,5 +1,6 @@
 import { Box, Chip, Grid, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface IJob {
   job_title: string;
@@ -10,9 +11,16 @@ interface IJob {
 }
 
 const EmployerJobCard = (job: any) => {
-  console.log("job", job);
-  const { job_title, company_name, salary_per_hour, skills, created_at } =
+  const { id, job_title, company_name, salary_per_hour, skills, applications } =
     job.job;
+
+  const navigate = useNavigate();
+
+  const applicationCount = applications ? applications.length : 0;
+  const handleApplicationsClick = () => {
+    navigate(`/jobs/${id}/applications`);
+  };
+
   return (
     <Box
       sx={{
@@ -35,9 +43,15 @@ const EmployerJobCard = (job: any) => {
           ))}
         </Grid>
       </Box>
-      {/* <Typography variant="caption" color="text">
-        Posted on: {new Date(created_at).toLocaleDateString()}
-      </Typography> */}
+
+      <Typography
+        variant="body2"
+        color="text"
+        sx={{ mt: 2, cursor: "pointer" }}
+        onClick={handleApplicationsClick}
+      >
+        Applications {applicationCount}
+      </Typography>
     </Box>
   );
 };

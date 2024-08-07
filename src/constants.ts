@@ -33,3 +33,5 @@ export const APPLICANTS_CONSTANTS = {
 export const EMPLOYERS_CONSTANTS = {
   NO_JOBS_TO_DISPLAY: "No Jobs to display!!",
 };
+
+export const PAGINATION_LIMIT = 10;
