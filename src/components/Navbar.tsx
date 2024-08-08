@@ -28,10 +28,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar
-      position="sticky"
-      // sx={{ marginBottom: "2rem" }}
-    >
+    <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>
           Job Portal
@@ -68,6 +65,9 @@ const Navbar = () => {
             </>
           ) : USER_ROLE === ROLES.FREELANCER ? (
             <>
+              <Button color="inherit" component={Link} to="/jobs">
+                View Jobs
+              </Button>
               <IconButton
                 edge="end"
                 color="inherit"
@@ -76,9 +76,6 @@ const Navbar = () => {
               >
                 <AccountCircle />
               </IconButton>
-              <Button color="inherit" component={Link} to="/view-jobs">
-                View Jobs
-              </Button>
             </>
           ) : null}
           {isLoggedIn && (

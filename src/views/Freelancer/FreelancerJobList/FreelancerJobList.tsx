@@ -78,7 +78,7 @@ const FreelancerJobList = () => {
             {totalCount + " "} {FREELANCER_CONSTANTS.RESULTS}
           </Typography>
           <Box display="flex" flexDirection="column" gap="1rem">
-            {dataToDisplay?.jobs.length ? (
+            {dataToDisplay?.jobs?.length > 0 ? (
               dataToDisplay?.jobs.map((job: IJob) => (
                 <ApplicantJobCard key={job.id} job={job} />
               ))
