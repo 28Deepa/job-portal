@@ -4,7 +4,7 @@ import React from "react";
 import { FREELANCER_DETAILS_BY_ID } from "../../graphql/freelancer/queries";
 import { useQuery } from "@apollo/client";
 import CustomModal from "../CustomModal";
-import FreelancerDetails from "../../views/Jobs/Freelancer/FreelancerDetails";
+import ApplicantDetails from "../../views/Employer/ApplicantDetails";
 
 const ApplicationCard = (application: any) => {
   const applicantData = application?.job?.freelancer;
@@ -30,7 +30,7 @@ const ApplicationCard = (application: any) => {
           <CustomModal
             isOpen={showProfileModal}
             onClose={() => setShowProfileModal(false)}
-            children={<FreelancerDetails freelancer={data?.freelancers[0]} />}
+            children={<ApplicantDetails freelancer={data?.freelancers[0]} />}
           />
         )}
         <Box>

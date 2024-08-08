@@ -2,7 +2,6 @@ import React from "react";
 import { Typography, Link, Stack } from "@mui/material";
 
 interface Freelancer {
-  __typename: string;
   name: string;
   email: string;
   contact_no: string;
@@ -11,13 +10,11 @@ interface Freelancer {
   projects: string[];
 }
 
-interface FreelancerDetailsProps {
+interface ApplicantDetailsProps {
   freelancer: Freelancer;
 }
 
-const FreelancerDetails: React.FC<FreelancerDetailsProps> = ({
-  freelancer,
-}) => {
+const ApplicantDetails: React.FC<ApplicantDetailsProps> = ({ freelancer }) => {
   return (
     <Stack spacing={2}>
       <Typography variant="h6">Freelancer Details</Typography>
@@ -53,4 +50,4 @@ const FreelancerDetails: React.FC<FreelancerDetailsProps> = ({
   );
 };
 
-export default FreelancerDetails;
+export default ApplicantDetails;

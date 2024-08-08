@@ -5,11 +5,11 @@ import {
   CustomLoader,
   CustomPagination,
   EmployerJobCard,
-} from "../../../components";
-import { IJob } from "../../../types";
-import { GET_JOBS_BY_EMPLOYER } from "../../../graphql/employer/queries";
+} from "../../components";
+import { IJob } from "../../types";
+import { GET_JOBS_BY_EMPLOYER } from "../../graphql/employer/queries";
 import { useSelector } from "react-redux";
-import { EMPLOYER_CONSTANTS, PAGINATION_LIMIT } from "../../../constants";
+import { EMPLOYER_CONSTANTS, PAGINATION_LIMIT } from "../../constants";
 
 const EmployerJobList = () => {
   const [page, setPage] = useState(1);

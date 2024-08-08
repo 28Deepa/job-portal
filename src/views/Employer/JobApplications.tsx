@@ -2,10 +2,10 @@ import { useQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Box, CircularProgress, Container, Typography } from "@mui/material";
-import { GET_APPLICATIONS_BY_JOB_ID } from "../graphql/employer/queries";
-import { PAGINATION_LIMIT } from "../constants";
-import { ApplicationCard, CustomPagination } from "../components";
-import { StyledContainer } from "../global.styled";
+import { GET_APPLICATIONS_BY_JOB_ID } from "../../graphql/employer/queries";
+import { PAGINATION_LIMIT } from "../../constants";
+import { ApplicationCard, CustomPagination } from "../../components";
+import { StyledContainer } from "../../global.styled";
 
 const JobApplications = () => {
   const { id } = useParams();

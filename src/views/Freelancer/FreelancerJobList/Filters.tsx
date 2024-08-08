@@ -8,8 +8,8 @@ import {
   Button,
 } from "@mui/material";
 import Select from "react-select";
-import { SKILLS } from "../../../constants";
 import { FilterBox } from "../../../global.styled";
+import { SKILLS } from "../../../constants";
 
 const Filters = ({ onApplyFilters }: any) => {
   const [minRate, setMinRate] = useState<number | null>(0);

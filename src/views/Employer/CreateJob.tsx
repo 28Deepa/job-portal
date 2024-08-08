@@ -1,18 +1,18 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Alert, Container } from "@mui/material";
-import { CreateJobForm } from "../components";
+import { CreateJobForm } from "../../components";
 import {
   formReducer,
   IFormState,
   initialState,
   validateField,
-} from "../components/CreateJobForm/reducer";
-import { POST_JOB } from "../graphql/employer/mutations";
+} from "../../components/CreateJobForm/reducer";
+import { POST_JOB } from "../../graphql/employer/mutations";
 import { useSelector } from "react-redux";
-import { StyledContainer } from "../global.styled";
+import { StyledContainer } from "../../global.styled";
 
-const JobCreate = () => {
+const CreateJob = () => {
   const [formState, dispatch] = useReducer(formReducer, initialState);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -107,4 +107,4 @@ const JobCreate = () => {
   );
 };
 
-export default JobCreate;
+export default CreateJob;

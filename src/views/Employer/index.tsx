@@ -1,8 +1,8 @@
 import React from "react";
 import EmployerJobList from "./EmployerJobList";
 
-const EmployerHome = () => {
+const Employer = () => {
   return <EmployerJobList />;
 };
 
-export default EmployerHome;
+export default Employer;

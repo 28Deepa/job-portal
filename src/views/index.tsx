@@ -1,8 +1,7 @@
-import React from "react";
 import { useSelector } from "react-redux";
-import { ROLES } from "../../constants";
-import FreelancerHome from "./Freelancer/FreelancerHome";
-import EmployerHome from "./Employer/EmployerHome";
+import Employer from "./Employer";
+import Freelancer from "./Freelancer";
+import { ROLES } from "../constants";
 
 const Jobs = () => {
   const { loggedInUserData } = useSelector((state: any) => state.AuthReducer);
@@ -11,8 +10,8 @@ const Jobs = () => {
 
   return (
     <>
-      {USER_ROLE === ROLES.FREELANCER && <FreelancerHome />}
-      {USER_ROLE === ROLES.EMPLOYER && <EmployerHome />}
+      {USER_ROLE === ROLES.FREELANCER && <Freelancer />}
+      {USER_ROLE === ROLES.EMPLOYER && <Employer />}
     </>
   );
 };

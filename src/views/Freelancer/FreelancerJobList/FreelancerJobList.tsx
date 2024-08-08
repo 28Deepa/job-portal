@@ -8,8 +8,8 @@ import {
 } from "../../../components";
 import { IJob } from "../../../types";
 import { FREELANCER_CONSTANTS } from "../../../constants";
-import FiltersComponent from "./Filters";
 import { GET_JOBS } from "../../../graphql/freelancer/queries";
+import Filters from "./Filters";
 
 const FreelancerJobList = () => {
   const [page, setPage] = useState(1);
@@ -63,7 +63,7 @@ const FreelancerJobList = () => {
 
   return (
     <Container>
-      <FiltersComponent onApplyFilters={handleApplyFilters} />
+      <Filters onApplyFilters={handleApplyFilters} />
       <Box display="flex" alignSelf="center" justifyContent="center">
         <Box
           display="flex"
