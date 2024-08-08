@@ -1,14 +1,6 @@
-import { Box, Chip, Grid, Typography } from "@mui/material";
 import React from "react";
+import { Box, Chip, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-interface IJob {
-  job_title: string;
-  company_name: string;
-  salary_per_hour: string;
-  skills: string[];
-  created_at: string;
-}
 
 const EmployerJobCard = (job: any) => {
   const { id, job_title, company_name, salary_per_hour, skills, applications } =
@@ -32,7 +24,7 @@ const EmployerJobCard = (job: any) => {
       <Typography component="div">{job_title}</Typography>
       <Typography variant="body2">{company_name}</Typography>
       <Typography variant="body2" color="text.secondary">
-        {salary_per_hour}
+        {"$"} {salary_per_hour}
       </Typography>
       <Box mt={1}>
         <Grid container spacing={1}>

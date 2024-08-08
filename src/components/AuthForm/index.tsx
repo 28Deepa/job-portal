@@ -5,7 +5,7 @@ import { ROLES, RoleType } from "../../constants";
 import RoleToggleButton from "./RoleToggleButton";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { userProfiles } from "../../dummyData";
+import { USER_PROFILES } from "../../dummyData";
 import { updateLoggedInUserData } from "../../store/actions/AuthAction";
 import { useNavigate } from "react-router-dom";
 
@@ -38,11 +38,13 @@ const AuthForm: React.FC<AuthFormProps> = ({
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (formState.email && userProfiles[formState.email]) {
-      dispatch(updateLoggedInUserData(userProfiles[formState.email]));
-      localStorage["user"] = JSON.stringify(userProfiles[formState.email]);
-      navigate("/jobs");
+    if (formState?.email && formState?.password) {
+      if (USER_PROFILES[formState.email].password === formState.password) {
+        dispatch(updateLoggedInUserData(USER_PROFILES[formState.email]));
+      }
     }
+    localStorage["user"] = JSON.stringify(USER_PROFILES[formState.email]);
+    navigate("/jobs");
   };
 
   return (
@@ -58,7 +60,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
     >
       <Typography variant="h4" gutterBottom>
         {isLogin ? "Login" : "Sign Up"}
-        {userRole === ROLES.FREELANCER ? "Freelancer" : "Employer"}
+        {userRole === ROLES.FREELANCER ? " Freelancer" : " as Employer"}
       </Typography>
       <EmailInput value={formState.email} updateValue={updateFormState} />
       <PasswordInput value={formState.password} updateValue={updateFormState} />
@@ -69,6 +71,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
         variant="contained"
         color="primary"
         sx={{ mt: 3, mb: 2 }}
+        disabled={!formState.email || !formState.password}
       >
         {isLogin ? "Login" : "Sign Up"}
       </Button>

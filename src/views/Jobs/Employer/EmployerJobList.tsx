@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Container } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Typography, Container, Alert } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import {
   CustomLoader,
@@ -10,10 +9,9 @@ import {
 import { IJob } from "../../../types";
 import { GET_JOBS_BY_EMPLOYER } from "../../../graphql/employer/queries";
 import { useSelector } from "react-redux";
-import { PAGINATION_LIMIT } from "../../../constants";
+import { EMPLOYER_CONSTANTS, PAGINATION_LIMIT } from "../../../constants";
 
 const EmployerJobList = () => {
-  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const limit = PAGINATION_LIMIT;
   const offset = (page - 1) * limit;
@@ -27,9 +25,8 @@ const EmployerJobList = () => {
       offset,
     },
   });
-  console.log({ data });
+
   const totalCount = data?.jobs_aggregate.aggregate.count;
-  console.log(totalCount);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -41,24 +38,23 @@ const EmployerJobList = () => {
     });
   };
 
-  const handleCreateNewJob = () => {
-    navigate("/jobs/create");
-  };
-
-  const handleJobDetailsClick = (jobId: any) => {
-    navigate(`/jobs/${jobId}`);
-  };
-
   if (loading) return <CustomLoader />;
-  if (error)
-    return <Typography color="error">Error: {error.message}</Typography>;
+  if (error) return <Alert severity="error">Error: {error.message}</Alert>;
 
   return (
     <Container>
       <Box display="flex" alignSelf="center" justifyContent="center">
-        <Box display="flex" flexDirection="column" width="660px" sx={{ mb: 4 }}>
-          <Typography variant="h5" sx={{ mb: 2 }}>
-            Jobs Posted by You
+        <Box
+          display="flex"
+          flexDirection="column"
+          width="660px"
+          sx={{ mb: 4, mt: 4 }}
+        >
+          <Typography variant="h5">
+            {EMPLOYER_CONSTANTS.JOBS_POSTED_BY_YOU}
+          </Typography>
+          <Typography variant="subtitle1" sx={{ mb: 2 }}>
+            {totalCount + " "} {EMPLOYER_CONSTANTS.RESULTS}
           </Typography>
 
           <Box display="flex" flexDirection="column" gap="1rem">
@@ -67,7 +63,7 @@ const EmployerJobList = () => {
                 <EmployerJobCard key={job.id} job={job} />
               ))
             ) : (
-              <Typography>No jobs posted yet.</Typography>
+              <Typography>{EMPLOYER_CONSTANTS.NO_JOBS_POSTED_YET}</Typography>
             )}
           </Box>
 

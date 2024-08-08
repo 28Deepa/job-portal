@@ -12,8 +12,8 @@ import { SKILLS } from "../../../constants";
 import { FilterBox } from "../../../global.styled";
 
 const Filters = ({ onApplyFilters }: any) => {
-  const [minRate, setMinRate] = useState<number | null>(null);
-  const [maxRate, setMaxRate] = useState<number | null>(null);
+  const [minRate, setMinRate] = useState<number | null>(0);
+  const [maxRate, setMaxRate] = useState<number | null>(10000);
   const [skills, setSkills] = useState<string[]>([]);
 
   const handleRateChange = (event: any) => {
@@ -26,12 +26,12 @@ const Filters = ({ onApplyFilters }: any) => {
       setMaxRate(150);
     } else {
       setMinRate(151);
-      setMaxRate(null);
+      setMaxRate(10000);
     }
   };
 
   const handleSkillChange = (selectedOptions: any) => {
-    setSkills(selectedOptions.map((option: any) => option.value));
+    setSkills(selectedOptions.map((option: any) => option.value.toLowerCase()));
   };
 
   const handleApplyFilters = () => {

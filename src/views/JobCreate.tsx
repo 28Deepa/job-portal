@@ -1,12 +1,6 @@
-import React, { useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { useMutation } from "@apollo/client";
-import {
-  Alert,
-  Box,
-  CircularProgress,
-  Container,
-  Typography,
-} from "@mui/material";
+import { Alert, Container } from "@mui/material";
 import { CreateJobForm } from "../components";
 import {
   formReducer,
@@ -15,6 +9,8 @@ import {
   validateField,
 } from "../components/CreateJobForm/reducer";
 import { POST_JOB } from "../graphql/employer/mutations";
+import { useSelector } from "react-redux";
+import { StyledContainer } from "../global.styled";
 
 const JobCreate = () => {
   const [formState, dispatch] = useReducer(formReducer, initialState);
@@ -22,6 +18,9 @@ const JobCreate = () => {
   const [error, setError] = useState(false);
 
   const [postJob, { loading: postJobApiLoading }] = useMutation(POST_JOB);
+
+  const { loggedInUserData } = useSelector((state: any) => state.AuthReducer);
+  const { email, contact_no, company_name, id: employer_id } = loggedInUserData;
 
   const handleChange = (field: any) => (event: any) => {
     const { value } = event.target;
@@ -34,7 +33,6 @@ const JobCreate = () => {
   };
 
   const handleSubmit = async (event: any) => {
-    // let hasErrors = true;
     event.preventDefault();
     Object.keys(formState).forEach((field) => {
       const fieldName = field as keyof IFormState;
@@ -47,16 +45,14 @@ const JobCreate = () => {
     });
 
     const hasErrors = Object.values(formState).some((field) => field.error);
-
-    console.log("hasErrors", hasErrors);
     if (!hasErrors) {
       const payload = {
         job_title: formState.jobTitle.value,
         job_description: formState.jobDescription.value,
-        company_name: formState.company.value,
-        salary_per_hour: "$" + formState.ratePerHour.value,
-        skills: formState.tags.value.split(","),
-        employer_id: 1,
+        company_name: company_name,
+        salary_per_hour: formState.ratePerHour.value,
+        skills: formState.tags.value.toLowerCase().split(","),
+        employer_id: employer_id,
       };
 
       try {
@@ -81,18 +77,32 @@ const JobCreate = () => {
     }
   };
 
+  useEffect(() => {
+    dispatch({ type: "RESET", payload: initialState });
+    // setting default values
+    Object.keys(formState).forEach((field) => {
+      const fieldName = field as keyof IFormState;
+      if (fieldName === "email")
+        dispatch({ type: "SET_VALUE", field: fieldName, value: email });
+      if (fieldName === "phoneNumber")
+        dispatch({ type: "SET_VALUE", field: fieldName, value: contact_no });
+      if (fieldName === "company")
+        dispatch({ type: "SET_VALUE", field: fieldName, value: company_name });
+    });
+  }, [email, contact_no, company_name, formState]);
+
   return (
     <Container>
       {success && <Alert severity="success">Job Posted Successfully</Alert>}
       {error && <Alert severity="error">Failed to Post Job</Alert>}
-      <Box display="flex" alignSelf="center" justifyContent="center">
+      <StyledContainer>
         <CreateJobForm
           formState={formState}
           postJobApiLoading={postJobApiLoading}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
         />
-      </Box>
+      </StyledContainer>
     </Container>
   );
 };

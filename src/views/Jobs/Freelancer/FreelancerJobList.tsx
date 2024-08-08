@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Box, Container, Typography } from "@mui/material";
 import {
@@ -7,7 +7,7 @@ import {
   CustomPagination,
 } from "../../../components";
 import { IJob } from "../../../types";
-import { APPLICANTS_CONSTANTS } from "../../../constants";
+import { FREELANCER_CONSTANTS } from "../../../constants";
 import FiltersComponent from "./Filters";
 import { GET_JOBS } from "../../../graphql/freelancer/queries";
 
@@ -20,12 +20,13 @@ const FreelancerJobList = () => {
     variables: { offset, limit },
   });
 
-  console.log("data", data);
-  if (error) {
-    console.log({ error });
-  }
-  const totalCount = data?.jobs_aggregate.aggregate.count;
-  console.log("totalCount", totalCount);
+  const [dataToDisplay, setDataToDisplay] = useState<any>([]);
+  const [totalCount, setTotalCount] = useState(0);
+
+  useEffect(() => {
+    setTotalCount(data?.jobs_aggregate.aggregate.count);
+    setDataToDisplay(data);
+  }, [data, loading]);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -37,30 +38,32 @@ const FreelancerJobList = () => {
     });
   };
 
+  // eslint-disable-next-line
   const [filters, setFilters] = useState({
-    minRate: null,
-    maxRate: null,
+    minRate: 0,
+    maxRate: 10000,
     skills: [],
   });
 
-  const handleApplyFilters = (newFilters: any) => {
+  const handleApplyFilters = async (newFilters: any) => {
     setFilters(newFilters);
     setPage(1);
-    fetchMore({
+    const newData = await fetchMore({
       variables: {
         offset: 0,
         ...newFilters,
       },
     });
+    setTotalCount(newData?.data?.jobs_aggregate.aggregate.count);
+    setDataToDisplay(newData?.data);
   };
 
   if (loading) return <CustomLoader />;
-  if (error) return <Box>{APPLICANTS_CONSTANTS.CUSTOM_ERROR}</Box>;
+  if (error) return <Box>{FREELANCER_CONSTANTS.CUSTOM_ERROR}</Box>;
 
   return (
     <Container>
       <FiltersComponent onApplyFilters={handleApplyFilters} />
-
       <Box display="flex" alignSelf="center" justifyContent="center">
         <Box
           display="flex"
@@ -69,20 +72,21 @@ const FreelancerJobList = () => {
           maxWidth="800px"
         >
           <Typography variant="h5">
-            {APPLICANTS_CONSTANTS.JOBS_FOR_YOU}
+            {FREELANCER_CONSTANTS.JOBS_FOR_YOU}
           </Typography>
           <Typography variant="subtitle1" sx={{ mb: 2 }}>
-            {totalCount + " "} {APPLICANTS_CONSTANTS.RESULTS}
+            {totalCount + " "} {FREELANCER_CONSTANTS.RESULTS}
           </Typography>
           <Box display="flex" flexDirection="column" gap="1rem">
-            {data?.jobs.length ? (
-              data?.jobs.map((job: IJob) => (
+            {dataToDisplay?.jobs.length ? (
+              dataToDisplay?.jobs.map((job: IJob) => (
                 <ApplicantJobCard key={job.id} job={job} />
               ))
             ) : (
-              <Typography>{APPLICANTS_CONSTANTS.NO_JOBS_TO_DISPLAY}</Typography>
+              <Typography>{FREELANCER_CONSTANTS.NO_JOBS_TO_DISPLAY}</Typography>
             )}
           </Box>
+
           <CustomPagination
             totalCount={totalCount}
             limit={limit}

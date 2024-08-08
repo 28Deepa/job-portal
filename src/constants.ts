@@ -18,20 +18,21 @@ export const SKILLS = [
   "C++",
   "HTML",
   "CSS",
+  "Solid Principles",
 ];
 
-export const APPLICANT_JOB_LIST_ITEMS_PER_PAGE = 20;
-export const EMPLOYER_JOB_LIST_ITEMS_PER_PAGE = 5;
-
-export const APPLICANTS_CONSTANTS = {
+export const FREELANCER_CONSTANTS = {
   JOBS_FOR_YOU: "Top job picks for you",
   RESULTS: "results",
   NO_JOBS_TO_DISPLAY: "No Jobs to display!!",
   CUSTOM_ERROR: "Its's not you, it's us!",
 };
 
-export const EMPLOYERS_CONSTANTS = {
-  NO_JOBS_TO_DISPLAY: "No Jobs to display!!",
+export const EMPLOYER_CONSTANTS = {
+  JOBS_POSTED_BY_YOU: "Jobs Posted by You",
+  RESULTS: "results",
+  NO_JOBS_POSTED_YET: "No Jobs Posted Yet!",
+  CUSTOM_ERROR: "Its's not you, it's us!",
 };
 
 export const PAGINATION_LIMIT = 10;

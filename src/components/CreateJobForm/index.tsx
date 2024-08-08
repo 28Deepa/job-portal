@@ -1,7 +1,6 @@
 import React from "react";
 import {
   TextField,
-  Button,
   Box,
   Grid,
   InputAdornment,
@@ -35,6 +34,7 @@ const CreateJobForm: React.FC<ICreateJobFormProps> = ({
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <TextField
+            disabled={formState.jobTitle.disabled}
             name="jobTitle"
             label="Job Title"
             fullWidth
@@ -51,6 +51,7 @@ const CreateJobForm: React.FC<ICreateJobFormProps> = ({
         </Grid>
         <Grid item xs={12}>
           <TextField
+            disabled={formState.jobDescription.disabled}
             name="jobDescription"
             label="Job Description"
             fullWidth
@@ -71,20 +72,7 @@ const CreateJobForm: React.FC<ICreateJobFormProps> = ({
         </Grid>
         <Grid item xs={12}>
           <TextField
-            name="company"
-            label="Company"
-            fullWidth
-            variant="outlined"
-            value={formState.company.value}
-            onChange={handleChange("company")}
-            error={
-              formState.company.isTouched && Boolean(formState.company.error)
-            }
-            helperText={formState.company.isTouched && formState.company.error}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
+            disabled={formState.ratePerHour.disabled}
             name="ratePerHour"
             label="Rate Per Hour"
             fullWidth
@@ -107,6 +95,7 @@ const CreateJobForm: React.FC<ICreateJobFormProps> = ({
         </Grid>
         <Grid item xs={12}>
           <TextField
+            disabled={formState.tags.disabled}
             name="tags"
             label="Tags"
             fullWidth
@@ -117,8 +106,30 @@ const CreateJobForm: React.FC<ICreateJobFormProps> = ({
             helperText={formState.tags.isTouched && formState.tags.error}
           />
         </Grid>
+
+        <Typography sx={{ mt: 4, mb: 1, pl: 2 }}>
+          Job Poster Details:
+        </Typography>
+
         <Grid item xs={12}>
           <TextField
+            disabled={formState.company.disabled}
+            name="company"
+            label="Company"
+            fullWidth
+            variant="outlined"
+            value={formState.company.value}
+            onChange={handleChange("company")}
+            error={
+              formState.company.isTouched && Boolean(formState.company.error)
+            }
+            helperText={formState.company.isTouched && formState.company.error}
+          />
+        </Grid>
+
+        <Grid item xs={12}>
+          <TextField
+            disabled={formState.phoneNumber.disabled}
             name="phoneNumber"
             label="Phone Number"
             fullWidth
@@ -136,6 +147,7 @@ const CreateJobForm: React.FC<ICreateJobFormProps> = ({
         </Grid>
         <Grid item xs={12}>
           <TextField
+            disabled={formState.email.disabled}
             name="email"
             label="Email"
             fullWidth

@@ -2,6 +2,7 @@ export interface IFieldState {
   value: string;
   isTouched: boolean;
   error: string;
+  disabled?: boolean;
 }
 
 export interface IFormState {
@@ -15,13 +16,13 @@ export interface IFormState {
 }
 
 export const initialState: IFormState = {
-  jobTitle: { value: "", isTouched: false, error: "" },
-  jobDescription: { value: "", isTouched: false, error: "" },
-  company: { value: "", isTouched: false, error: "" },
-  ratePerHour: { value: "", isTouched: false, error: "" },
-  tags: { value: "", isTouched: false, error: "" },
-  phoneNumber: { value: "", isTouched: false, error: "" },
-  email: { value: "", isTouched: false, error: "" },
+  jobTitle: { value: "", isTouched: false, error: "", disabled: false },
+  jobDescription: { value: "", isTouched: false, error: "", disabled: false },
+  company: { value: "", isTouched: false, error: "", disabled: true },
+  ratePerHour: { value: "", isTouched: false, error: "", disabled: false },
+  tags: { value: "", isTouched: false, error: "", disabled: false },
+  phoneNumber: { value: "", isTouched: false, error: "", disabled: true },
+  email: { value: "", isTouched: false, error: "", disabled: true },
 };
 
 export type Action =
@@ -55,7 +56,8 @@ export const formReducer = (
       return newState;
     }
     case "RESET":
-      return { ...initialState };
+      const newState: IFormState = { ...initialState };
+      return newState;
     default:
       return formState;
   }

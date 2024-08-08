@@ -4,11 +4,8 @@ import { useParams } from "react-router-dom";
 import { Box, CircularProgress, Container, Typography } from "@mui/material";
 import { GET_APPLICATIONS_BY_JOB_ID } from "../graphql/employer/queries";
 import { PAGINATION_LIMIT } from "../constants";
-import {
-  ApplicationCard,
-  CustomPagination,
-  EmployerJobCard,
-} from "../components";
+import { ApplicationCard, CustomPagination } from "../components";
+import { StyledContainer } from "../global.styled";
 
 const JobApplications = () => {
   const { id } = useParams();
@@ -31,7 +28,7 @@ const JobApplications = () => {
 
   useEffect(() => {
     if (data) {
-      setApplicationsData(data.data);
+      setApplicationsData(data?.applications);
     }
   }, [data]);
 
@@ -49,19 +46,17 @@ const JobApplications = () => {
 
   if (error) return <Box>Error: {error.message}</Box>;
 
-  // console.log({ data?.data });
-
   return (
     <Container>
-      <Box display="flex" alignSelf="center" justifyContent="center">
+      <StyledContainer>
         <Box display="flex" flexDirection="column" width="660px" sx={{ mb: 4 }}>
           <Typography variant="h5" sx={{ mb: 2 }}>
-            Jobs Posted by You
+            Applicants
           </Typography>
 
           <Box display="flex" flexDirection="column" gap="1rem">
-            {applicationsData?.applications.length ? (
-              applicationsData?.applications.map((application: any) => (
+            {applicationsData?.length ? (
+              applicationsData?.map((application: any) => (
                 <ApplicationCard key={application.id} job={application} />
               ))
             ) : (
@@ -69,14 +64,16 @@ const JobApplications = () => {
             )}
           </Box>
 
-          <CustomPagination
-            totalCount={20}
-            limit={limit}
-            page={page}
-            handlePageChange={handlePageChange}
-          />
+          {applicationsData?.length > 0 && (
+            <CustomPagination
+              totalCount={applicationsData?.length}
+              limit={limit}
+              page={page}
+              handlePageChange={handlePageChange}
+            />
+          )}
         </Box>
-      </Box>
+      </StyledContainer>
     </Container>
   );
 };

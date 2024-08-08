@@ -14,6 +14,7 @@ export const StyledBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   margin-top: 8rem;
 `;
 
@@ -30,4 +31,11 @@ export const FilterBox = styled.div`
   width: 100%;
   margin-bottom: 16px;
   background: white;
+`;
+
+export const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
 `;
